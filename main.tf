@@ -14,7 +14,7 @@ module "networking" {
 module "s3" {
   source      = "./modules/s3"
   bucket_name = "one-stop-app-bucket-${random_string.suffix.result}"  # Bucket name should now be valid
-  environment = "production"
+  environment = "development"
 }
 
 # Random string to append to bucket name to ensure it's unique
