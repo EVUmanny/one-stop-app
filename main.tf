@@ -17,9 +17,24 @@ module "s3" {
   environment = "development"
 }
 
-# Random string to append to bucket name to ensure it's unique
+
+# Database module
+module "database" {
+  source            = "./modules/database"
+  db_name           = "onestopapp"
+  username          = "admin"
+  password          = "securepassword123"
+  security_group_ids = [module.networking.security_group_id]
+  subnet_group_name = module.networking.db_subnet_group_name
+  environment       = "development"
+}
+
+
+
+# Random string for unique names
 resource "random_string" "suffix" {
   length  = 6
   special = false
-  upper   = false   # Ensure that we only get lowercase characters
+  upper   = false
 }
+
