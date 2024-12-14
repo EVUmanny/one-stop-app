@@ -38,3 +38,22 @@ resource "random_string" "suffix" {
   upper   = false
 }
 
+
+module "lambda" {
+  source                 = "./modules/lambda"
+  function_name          = "one-stop-app-function"
+  runtime                = "python3.8"
+  handler                = "index.handler"
+  role_arn               = aws_iam_role.lambda_role.arn
+  source_code            = "lambda_function.zip"
+  environment_variables  = { DB_HOST = module.database.db_instance_endpoint }
+  environment            = "development"
+}
+
+module "api_gateway" {
+  source                     = "./modules/api_gateway"
+  api_name                   = "one-stop-app-api"
+  resource_path              = "bookings"
+  lambda_function_invoke_arn = module.lambda.lambda_function_arn
+  stage_name                 = "development"
+}
