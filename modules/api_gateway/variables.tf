@@ -1,20 +1,24 @@
-variable "api_name" {
-  description = "Name of the API Gateway"
-  type        = string
-}
-
-variable "resource_path" {
-  description = "Path for the API resource"
+variable "region" {
+  description = "The AWS region where the API Gateway is deployed"
   type        = string
 }
 
 variable "lambda_function_invoke_arn" {
-  description = "The ARN of the Lambda function to invoke"
+  description = "The ARN of the Lambda function to integrate with API Gateway"
+  type        = string
+}
+
+variable "api_name" {
+  description = "The name of the API Gateway"
+  type        = string
+}
+
+variable "resource_path" {
+  description = "The path for the API resource"
   type        = string
 }
 
 variable "stage_name" {
-  description = "The deployment stage name (e.g., dev, prod)"
+  description = "The stage name for the API Gateway (e.g., dev, prod)"
   type        = string
-  default     = "dev"
 }

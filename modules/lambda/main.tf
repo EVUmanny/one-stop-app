@@ -4,7 +4,7 @@ resource "aws_lambda_function" "this" {
   handler       = var.handler
   role          = var.role_arn
 
-  filename      = var.source_code
+  filename         = var.source_code
   source_code_hash = filebase64sha256(var.source_code)
 
   environment {
@@ -16,3 +16,4 @@ resource "aws_lambda_function" "this" {
     Environment = var.environment
   }
 }
+
