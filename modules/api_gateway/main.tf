@@ -95,3 +95,13 @@ resource "aws_api_gateway_stage" "stage" {
   stage_name    = var.stage_name
 }
 
+#Integrate Cognito with API Gateway
+
+module "api_gateway" {
+  source                     = "./modules/api_gateway"
+  api_name                   = "one-stop-app-api"
+  resource_path              = "bookings"
+  stage_name                 = "development"
+  lambda_function_invoke_arn = module.lambda.lambda_function_arn
+  cognito_user_pool_arn      = module.cognito.user_pool_arn
+}

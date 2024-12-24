@@ -22,3 +22,8 @@ variable "stage_name" {
   description = "The stage name for the API Gateway (e.g., dev, prod)"
   type        = string
 }
+
+variable "cognito_user_pool_arn" {
+  description = "The ARN of the Cognito User Pool to secure API Gateway"
+  type        = string
+}
