@@ -50,14 +50,7 @@ module "lambda" {
   environment            = "development"
 }# In ./modules/lambda/variables.tf
 
-module "api_gateway" {
-  source                     = "./modules/api_gateway"
-region                       = "eu-west-2"
-  api_name                   = "one-stop-app-api"
-  resource_path              = "bookings"
-  stage_name                 = "development"
-  lambda_function_invoke_arn = module.lambda.lambda_function_arn # Referencing the Lambda module output
-}
+
 variable "timeout" {
   description = "The amount of time your Lambda Function has to run in seconds"
   type        = number
@@ -214,3 +207,12 @@ resource "aws_iam_role_policy_attachment" "authenticated_role_policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess" # Example policy; adjust as needed
 }
 
+module "api_gateway" {
+  source                     = "./modules/api_gateway"
+  region                     = "eu-west-2"
+  api_name                   = "one-stop-app-api"
+  resource_path              = "bookings"
+  stage_name                 = "development"
+  lambda_function_invoke_arn = module.lambda.lambda_function_arn
+  cognito_user_pool_arn = aws_cognito_user_pool.this.arn
+}
